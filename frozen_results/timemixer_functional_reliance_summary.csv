@@ -1,0 +1,4 @@
+dataset,pred_len,targets,median_grouped_effect_pct,positive_target_fraction,donor_split_half_rho,random_window_split_half_rho,temporal_block_rho
+ETTh1,720,7,27.426,1.0,0.886,0.943,0.429
+Electricity,192,6,147.599,1.0,0.921,0.888,0.230
+Solar,720,6,1015.435,1.0,0.951,0.696,0.061
