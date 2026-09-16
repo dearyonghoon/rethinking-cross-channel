@@ -1,0 +1,8 @@
+dataset,horizon,n_subset_seeds,mean_pooled_gain_pct,std_pooled_gain_pct,min_pooled_gain_pct,max_pooled_gain_pct,positive_seed_fraction
+Electricity,96,5,0.2062,4.8891,-5.0613,5.5203,0.6
+Electricity,192,5,2.0062,1.2162,0.4947,3.8107,1.0
+Electricity,336,5,-1.4052,3.4747,-5.0235,3.7776,0.4
+Electricity,720,5,-1.7109,2.6461,-4.0327,2.7822,0.2
+PeMS04,12,5,2.1690,2.8823,-0.1933,5.3220,0.6
+PeMS04,24,5,-0.0337,1.7302,-2.6407,1.7235,0.6
+PeMS04,48,5,21.6971,16.0973,-2.6626,36.6807,0.8
