@@ -1,0 +1,8 @@
+dataset,horizon,cap64_gain_pct,cap128_gain_pct,cap192_gain_pct
+Electricity,96,0.3911,-0.0445,0.5570
+Electricity,192,2.1120,1.4992,1.0554
+Electricity,336,1.3430,-2.1513,-0.5499
+Electricity,720,1.4394,0.6136,-0.3147
+PeMS04,12,-0.2568,-0.5522,-0.4839
+PeMS04,24,-1.1307,-3.0977,-5.9873
+PeMS04,48,-8.8387,28.9576,13.3738
