@@ -1,0 +1,3 @@
+scope,n_conditions,adaptive_wins,mean_gain_%,median_gain_%,ridge_mlp_spearman,sign_agreement
+all_32,32,19,1.66670625,1.1545,0.472,0.6875
+general_20,20,13,2.13732,1.8515,0.7127819548872181,0.8
