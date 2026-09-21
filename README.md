@@ -2,6 +2,10 @@
 
 Official implementation and reproducibility code for **Rethinking Cross-Channel Importance in Time-Series Forecasting**.
 
+## Abstract
+
+Cross-channel modeling is central to multivariate time-series forecasting, yet channels that are statistically related, predictively useful, and actually used by a trained forecaster are often treated as if they defined the same notion of importance. We show that they need not coincide. Cross-channel dependency structures change substantially across future offsets, and horizon-adaptive source selection improves a controlled Ridge predictor in 21 of 32 dataset–prediction-length conditions, with a mean gain of 5.16%. This selected-set signal also transfers to a matched nonlinear predictor. Yet imposing the same horizon-specific source logic on iTransformer yields only 11 of 20 wins and a mean gain of 0.208%, with little alignment between controlled and neural gains. Functional interventions further show that strong forecasters use cross-channel information, while their source-reliance rankings agree little with controlled utility or with one another across iTransformer, TimesNet, and a cross-channel TimeMixer. As a constructive consequence, bounded post-hoc support improves a frozen channel-independent forecaster in 12 of 16 dataset–horizon conditions, with a positive aggregate bootstrap interval. Cross-channel importance should therefore be interpreted relative to the forecasting mechanism and question that define it: **related ≠ useful ≠ used**.
+
 This repository studies three notions that are often conflated as *cross-channel importance* in multivariate time-series forecasting:
 
 > **related ≠ useful ≠ used**
@@ -10,7 +14,7 @@ This repository studies three notions that are often conflated as *cross-channel
 - **Controlled predictive utility:** which channels improve a specified controlled predictor.
 - **Functional reliance:** which channel histories a fixed trained forecaster relies on under matched interventions.
 
-The repository contains the experiments used to evaluate dependency drift, controlled Ridge and MLP utility, transfer to iTransformer, same-checkpoint functional reliance, TimesNet and cross-channel TimeMixer confirmations, multi-probe utility, and high-dimensional robustness.
+The repository contains the experiments used to evaluate dependency drift, controlled Ridge and MLP utility, transfer to iTransformer, same-checkpoint functional reliance, TimesNet and cross-channel TimeMixer confirmations, multi-probe utility, high-dimensional robustness, and bounded predictive support under chronological calibration.
 
 ## Repository structure
 
@@ -29,7 +33,8 @@ The repository contains the experiments used to evaluate dependency drift, contr
 │   ├── 05_transfer_mechanisms/
 │   ├── 06_functional_reliance/
 │   ├── 07_robustness_reliability/
-│   └── 08_additional_controls/
+│   ├── 08_additional_controls/
+│   └── 09_bounded_support/
 ├── frozen_results/
 └── tools/
 ```
@@ -73,6 +78,7 @@ The notebooks are organized by experimental stage. A practical order is:
 6. `06_functional_reliance`: grouped/individual source-history interventions and ranking alignment.
 7. `07_robustness_reliability`: same-checkpoint offsets, reliability, and TimesNet confirmation.
 8. `08_additional_controls`: multi-probe utility, TimeMixer-XC, and high-dimensional robustness.
+9. `09_bounded_support`: chronological calibration, five-seed/four-horizon validation, and the locked one-shot test.
 
 See [`RESULT_MAP.md`](RESULT_MAP.md) for the detailed mapping from findings to notebooks and frozen result files.
 
@@ -89,10 +95,11 @@ A successful reproduction should recover the main aggregate patterns reported by
 - Multi-probe Ridge-vs-MLP utility-ranking median Spearman **0.365** over 170 target instances; both probe-specific utilities remain weakly aligned with matched iTransformer EPI.
 - TimeMixer-XC has positive grouped all-other effects for **19/19** evaluated targets. Median neural EPI correlations are about **-0.091** (iTransformer–TimesNet), **-0.009** (iTransformer–TimeMixer), and **0.103** (TimesNet–TimeMixer).
 - High-dimensional target-subset/candidate-cap analyses show that controlled Adaptive-vs-Shared gains can be protocol-conditioned; the original pooled metric is reproduced within **0.0034 percentage points**.
+- In the locked bounded-support evaluation, the pre-specified cross-fitted controller improves **12/16** dataset–horizon cells, and none of the five-seed cell means regresses by more than **0.5%**. Its hierarchical-bootstrap mean MSE gain is **+0.388%**, with 95% CI **[+0.155%, +0.661%]**.
 
 ## Frozen results
 
-`frozen_results/` contains compact CSV summaries for fast verification without rerunning every expensive neural experiment. Executed notebook outputs are retained where available.
+`frozen_results/` contains compact CSV summaries for fast verification without rerunning every expensive neural experiment. The `bounded_support/` subdirectory contains the condition-level locked-test MSE table, hierarchical-bootstrap summary, and sealed decision record. Executed notebook outputs are retained where available.
 
 ## Integrity check
 

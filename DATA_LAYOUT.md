@@ -1,5 +1,6 @@
 # Data Layout
 
+The notebooks search several common local paths and can be adapted with `tools/patch_paths.py`.
 A simple recommended layout is:
 
 ```text
@@ -19,23 +20,27 @@ A simple recommended layout is:
     └── ETTm1.csv
 ```
 
-Some notebooks also recognize common aliases such as `ECL/electricity.csv`, `Solar/solar_AL.txt`, and dataset-specific subdirectories such as `PEMS03/PEMS03.npz`.
+Some notebooks also recognize common aliases such as:
 
-The datasets are standard public forecasting benchmarks and are not redistributed here.
+- `ECL/electricity.csv`
+- `Solar/solar_AL.txt`
+- dataset-specific subdirectories such as `PEMS03/PEMS03.npz`
+
+The datasets are standard public benchmarks and are not redistributed in this supplementary archive.
 
 ## Time-Series-Library
 
-Clone [THUML Time-Series-Library](https://github.com/thuml/Time-Series-Library) to a convenient location, for example:
+Place a Time-Series-Library checkout at a convenient location, e.g.
 
 ```text
 /workspace/Time-Series-Library/
 ```
 
-Then edit each notebook's configuration cell or run:
+and either edit the notebook path cell or run:
 
 ```bash
 python tools/patch_paths.py \
-  --project-root /workspace/rethinking-cross-channel \
+  --project-root /workspace/iclr27 \
   --data-root /workspace/datasets \
   --tslib-root /workspace/Time-Series-Library
 ```
