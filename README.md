@@ -107,7 +107,7 @@ A successful reproduction should recover the main aggregate patterns reported by
 python tools/check_package.py
 ```
 
-The checker validates expected artifacts and notebook JSON. `SHA256SUMS.txt` records file-level checksums for the reproducibility snapshot.
+The checker validates expected artifacts and notebook JSON.
 
 ## Citation
 
