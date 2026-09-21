@@ -1,0 +1,26 @@
+{
+  "experiment": "100_locked_one_shot_test_evaluation",
+  "phase": "FINAL_TEST_CLOSED",
+  "test_evaluated": true,
+  "primary_endpoint": "CrossFitSafe vs Independent",
+  "completed_rows": 400,
+  "expected_rows": 400,
+  "improved_cells": 12,
+  "noninferior_cells_at_0.5pct": 16,
+  "total_cells": 16,
+  "overall_primary_gain": 0.003879309800761144,
+  "overall_primary_gain_pct": 0.38793098007611443,
+  "overall_primary_95ci": [
+    0.0015530077284944806,
+    0.006608393154516337
+  ],
+  "overall_primary_95ci_pct": [
+    0.15530077284944807,
+    0.6608393154516337
+  ],
+  "worst_seed_level_regression": 0.012613737993467905,
+  "worst_seed_level_regression_pct": 1.2613737993467904,
+  "test_confirmation_passed": false,
+  "post_test_tuning_permitted": false,
+  "next": "report_results_without_retuning"
+}
