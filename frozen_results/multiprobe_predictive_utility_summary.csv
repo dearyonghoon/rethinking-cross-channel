@@ -1,0 +1,10 @@
+diagnostic,n,value
+cross_probe_target_instances,170,170
+median_spearman_ridge_vs_mlp,170,0.365
+mean_topk_jaccard_ridge_vs_mlp,170,0.219
+mean_ridge_topk_recall_in_mlp,170,0.326
+matched_epi_target_instances,39,39
+median_ridge_vs_epi,39,0.004
+median_mlp_vs_epi,39,-0.143
+median_ridge_vs_mlp_on_epi_pairs,39,0.324
+median_original_vs_recomputed_ridge_fidelity,39,0.943

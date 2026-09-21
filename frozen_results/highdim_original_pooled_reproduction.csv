@@ -1,0 +1,8 @@
+dataset,horizon,pooled_gain_pct
+Electricity,96,-0.0445
+Electricity,192,1.4992
+Electricity,336,-2.1513
+Electricity,720,0.6136
+PeMS04,12,-0.5522
+PeMS04,24,-3.0977
+PeMS04,48,28.9576

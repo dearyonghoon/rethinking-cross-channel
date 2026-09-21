@@ -1,0 +1,11 @@
+# Core notebook dependencies. The original executed notebooks use Python 3.8.x.
+numpy>=1.22,<2.0
+pandas>=1.4,<3.0
+scipy>=1.8,<2.0
+matplotlib>=3.5,<4.0
+torch==2.4.1
+jupyter>=1.0
+ipykernel>=6.0
+
+# Neural backbone notebooks also require the dependencies of the selected
+# Time-Series-Library checkout. Install that repository's requirements file.

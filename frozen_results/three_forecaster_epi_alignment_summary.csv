@@ -1,0 +1,4 @@
+forecaster_A,forecaster_B,targets,median_rho,mean_rho,mean_top5_jaccard
+iTransformer,TimesNet,19,-0.091,0.045,0.348
+iTransformer,TimeMixer-XC,19,-0.009,-0.032,0.301
+TimesNet,TimeMixer-XC,19,0.103,0.100,0.357

@@ -1,0 +1,2 @@
+n_conditions,full_wins,full_mean_gain_%,full_median_gain_%,full_ridge_gain_spearman,full_sign_agreement,endpoint_wins,endpoint_mean_gain_%,endpoint_median_gain_%,endpoint_ridge_gain_spearman,endpoint_sign_agreement
+20,11,0.20797902771461177,0.08325523802576403,0.05714285714285714,0.5,11,-0.12048156931069909,0.07039820776480946,-0.07368421052631578,0.4
