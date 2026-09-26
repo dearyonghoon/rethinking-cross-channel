@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Integrity and anonymization checks for the anonymous supplementary archive."""
+"""Integrity and public-release checks for the reproducibility package."""
 
 import json
 import re
@@ -28,9 +28,14 @@ EXPECTED = [
     "notebooks/07_robustness_reliability/Final_Robustness_ForecasterSpecific_SourceReliance_ICLR27.ipynb",
     "notebooks/07_robustness_reliability/Expected_Permutation_Importance_Reliability_ICLR27.ipynb",
     "notebooks/07_robustness_reliability/TimesNet_StrongBackbone_EPI_Confirmatory_ICLR27.ipynb",
+    "notebooks/08_additional_controls/Exp4_MultiProbe_PredictiveUtility_Ridge_vs_MLP_ICLR27.ipynb",
+    "notebooks/08_additional_controls/Exp5_ThirdArchitecture_TimeMixer_CrossChannel_EPI_ICLR27.ipynb",
+    "notebooks/08_additional_controls/Exp6_HighDim_TargetSubset_CandidateCap_Robustness_ICLR27.ipynb",
+    "notebooks/08_additional_controls/Exp6_PooledMetric_Reanalysis_ICLR27.ipynb",
     "notebooks/09_bounded_support/01_temporal_calibration_safe_support.ipynb",
     "notebooks/09_bounded_support/02_five_seed_four_horizon_validation.ipynb",
     "notebooks/09_bounded_support/03_locked_one_shot_test.ipynb",
+    "notebooks/09_bounded_support/README.md",
     "frozen_results/internal_horizon_grouped_predictive_bias_results.csv",
     "frozen_results/hardmask_all20_variant_results.csv",
     "frozen_results/hardmask_all20_paired_summary.csv",
@@ -84,27 +89,12 @@ def main():
         except Exception as exc:
             failures.append("invalid CSV: %s (%s)" % (rel, exc))
 
-    # Conservative patterns for common double-blind identity leaks.
     patterns = {
         "email": re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"),
         "home path": re.compile(r"/(?:home|Users)/[^/\s\"']+"),
-        "personal github path": re.compile(r"github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", re.I),
         "user-specific data path": re.compile(r"/data/[A-Za-z][A-Za-z0-9_.-]{3,}/(?:code|src|project|workspace|repo|repos)/"),
         "Korean text": re.compile(r"[\uac00-\ud7a3]"),
-        "assistant trace": re.compile(
-            "|".join(
-                (
-                    "Chat" + "GPT",
-                    "Open" + "AI",
-                    "Clau" + "de",
-                    "Gem" + "ini",
-                    r"AI[ -]?assi" + "stant",
-                    "user " + "asked",
-                    "conversation " + "transcript",
-                )
-            ),
-            re.I,
-        ),
+        "assistant trace": re.compile("|".join(("Chat"+"GPT","Open"+"AI","Clau"+"de","Gem"+"ini",r"AI[ -]?assi"+"stant","user "+"asked","conversation "+"transcript")), re.I),
     }
 
     text_suffixes = {".md", ".txt", ".csv", ".yml", ".yaml", ".py", ".ipynb"}
@@ -112,11 +102,9 @@ def main():
     for p in text_files:
         text = p.read_text(encoding="utf-8", errors="ignore")
         for label, pattern in patterns.items():
-            for match in pattern.finditer(text):
-                if label == "personal github path" and match.group(0).lower().startswith("github.com/thuml/time-series-library"):
-                    continue
-                failures.append("possible %s in %s: %s" % (label, p.relative_to(ROOT), match.group(0)))
-                break
+            m = pattern.search(text)
+            if m:
+                failures.append("possible %s in %s: %s" % (label, p.relative_to(ROOT), m.group(0)))
 
     print("notebooks:", len(notebooks))
     print("expected artifacts:", len(EXPECTED))
