@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Rewrite common local paths in retained experiment notebooks."""
+"""Rewrite common local paths in the submitted notebooks.
+
+This utility only changes string occurrences in notebook JSON. It is intended to
+make the retained server-oriented notebooks easier to run on another machine.
+"""
+
 import argparse
 import shutil
 from pathlib import Path
@@ -24,32 +29,36 @@ def replace_in_file(path, replacements, make_backup=True):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--project-root", required=True)
-    parser.add_argument("--data-root", required=True)
-    parser.add_argument("--tslib-root", required=True)
-    parser.add_argument("--package-root", default=None)
+    parser.add_argument("--project-root", required=True, help="Root used for result/cache directories")
+    parser.add_argument("--data-root", required=True, help="Root containing benchmark datasets")
+    parser.add_argument("--tslib-root", required=True, help="Time-Series-Library checkout")
+    parser.add_argument("--package-root", default=None, help="Repository root (default: parent of tools/)")
     parser.add_argument("--no-backup", action="store_true")
     args = parser.parse_args()
 
-    root = Path(args.package_root).resolve() if args.package_root else Path(__file__).resolve().parents[1]
-    project = str(Path(args.project_root).resolve())
-    data = str(Path(args.data_root).resolve())
-    tslib = str(Path(args.tslib_root).resolve())
+    package_root = Path(args.package_root).resolve() if args.package_root else Path(__file__).resolve().parents[1]
+    project_root = str(Path(args.project_root).resolve())
+    data_root = str(Path(args.data_root).resolve())
+    tslib_root = str(Path(args.tslib_root).resolve())
+
     replacements = [
-        ("/data/time-series-foundation-model/Time-Series-Library", tslib),
-        ("/data/time-series_foundation_model/Time-Series-Library", tslib),
-        ("/data/Time-Series-Library_v2", tslib),
-        ("/data/Time-Series-Library", tslib),
-        ("/data/code/2026_08", project),
-        ("/data/results_", project.rstrip("/") + "/results_"),
-        ("/data/dataset", data),
+        ("/data/time-series-foundation-model/Time-Series-Library", tslib_root),
+        ("/data/time-series_foundation_model/Time-Series-Library", tslib_root),
+        ("/data/Time-Series-Library_v2", tslib_root),
+        ("/data/Time-Series-Library", tslib_root),
+        ("/data/code/2026_08", project_root),
+        ("/data/results_", project_root.rstrip("/") + "/results_"),
+        ("/data/dataset", data_root),
     ]
-    notebooks = sorted((root / "notebooks").rglob("*.ipynb"))
+
+    notebooks = sorted((package_root / "notebooks").rglob("*.ipynb"))
     n_changed = 0
     for notebook in notebooks:
-        if replace_in_file(notebook, replacements, make_backup=not args.no_backup):
+        changes = replace_in_file(notebook, replacements, make_backup=not args.no_backup)
+        if changes:
             n_changed += 1
-            print("patched:", notebook.relative_to(root))
+            print("patched:", notebook.relative_to(package_root))
+
     print("notebooks scanned:", len(notebooks))
     print("notebooks changed:", n_changed)
 
